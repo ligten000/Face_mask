@@ -1,0 +1,26 @@
+
+# Python virtual environments
+.venv/
+.venv-*/
+venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Local secrets
+.env
+*.pem
+*.key
+
+# Local editor settings
+.vscode/
+
+# Datasets and training artifacts
+model/dataset/
+outputs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db

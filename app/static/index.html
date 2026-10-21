@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FaceMask Cloud Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="/static/app.js" defer></script>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">FM</div>
+            <div>
+                <h2>FaceMask</h2>
+                <p>AI Cloud Monitoring</p>
+            </div>
+        </div>
+
+        <nav>
+            <a class="nav-item active" href="#overview">◫ &nbsp; Tổng quan</a>
+            <a class="nav-item" href="#camera-section">▣ &nbsp; Camera AI</a>
+            <a class="nav-item" href="#history-section">◷ &nbsp; Lịch sử</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <span class="status-dot"></span>
+            <span id="sidebar-status">Đang kiểm tra API...</span>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div>
+                <h1>Dashboard</h1>
+                <p>Theo dõi hệ thống nhận diện khẩu trang</p>
+            </div>
+            <div class="server-status">
+                <span class="status-dot" id="api-dot"></span>
+                <span id="api-status">Đang kết nối...</span>
+            </div>
+        </header>
+
+        <!-- <section id="overview" class="stats-grid">
+            <article class="stat-card">
+                <div class="stat-icon blue">▣</div>
+                <p>Tổng lượt nhận diện</p>
+                <h2 id="total-count">0</h2>
+                <small>Tổng kết quả AI đã ghi nhận</small>
+            </article> -->
+
+            <!-- <article class="stat-card">
+                <div class="stat-icon green">✓</div>
+                <p>Đeo đúng cách</p>
+                <h2 id="correct-count">0</h2>
+                <small>Đeo khẩu trang đúng cách</small>
+            </article> -->
+<!-- 
+            <article class="stat-card">
+                <div class="stat-icon orange">!</div>
+                <p>Không đeo</p>
+                <h2 id="without-count">0</h2>
+                <small>Phát hiện không đeo khẩu trang</small>
+            </article> -->
+
+            <!-- <article class="stat-card">
+                <div class="stat-icon red">⚠</div>
+                <p>Đeo sai cách</p>
+                <h2 id="incorrect-count">0</h2>
+                <small>Đeo khẩu trang chưa đúng</small>
+            </article>
+        </section> -->
+
+        <section class="content-grid">
+            <article class="panel camera-panel" id="camera-section">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Camera AI</h2>
+                        <p>Hình ảnh trực tiếp từ webcam USB</p>
+                    </div>
+                    <span class="live-badge">● LIVE</span>
+                </div>
+
+                <div class="video-container">
+                    <video id="webcam" autoplay playsinline muted></video>
+                    <canvas id="capture-canvas" hidden></canvas>
+                    <div id="camera-placeholder" class="camera-placeholder">
+                        <div class="camera-symbol">▣</div>
+                        <p>Webcam chưa được bật</p>
+                        <small>Nhấn nút bên dưới để bắt đầu</small>
+                    </div>
+                </div>
+
+                <div class="camera-controls">
+                    <button id="start-camera" class="btn btn-primary">
+                        Bật webcam
+                    </button>
+                    <button id="stop-camera" class="btn btn-secondary" disabled>
+                        Tắt webcam
+                    </button>
+                </div>
+
+                <div class="notice" id="detection-message">
+                    Chưa gửi ảnh đến AI.
+                </div>
+            </article>
+
+            <article class="panel system-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Trạng thái hệ thống</h2>
+                        <p>Thông tin kết nối</p>
+                    </div>
+                </div>
+
+                <div class="system-row">
+                    <span>FastAPI</span>
+                    <strong id="backend-status">Đang kiểm tra</strong>
+                </div>
+                <div class="system-row">
+                    <span>Camera</span>
+                    <strong id="camera-status">Chưa bật</strong>
+                </div>
+                <div class="system-row">
+                    <span>AI Model</span>
+                    <strong id="model-status">Chưa tích hợp</strong>
+                </div>
+                <div class="system-row">
+                    <span>Chế độ</span>
+                    <strong id="mode-status">Local</strong>
+                </div>
+
+                <div class="notice warning">
+                    API hiện tại mới tiếp nhận ảnh. Kết quả nhận diện AI sẽ xuất hiện
+                    sau khi tích hợp mô hình vào backend.
+                </div>
+            </article>
+        </section>
+
+        <section class="panel history-panel" id="history-section">
+            <div class="panel-heading">
+                <div>
+                    <h2>Lịch sử nhận diện</h2>
+                    <p>Các sự kiện nhận diện trong phiên hiện tại</p>
+                </div>
+                <button id="clear-history" class="btn btn-secondary">
+                    Xóa lịch sử phiên
+                </button>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Thời gian</th>
+                            <th>Trạng thái</th>
+                            <th>Độ tin cậy</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-body">
+                        <tr>
+                            <td colspan="3" class="empty-state">
+                                Chưa có kết quả AI để hiển thị.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer>
+            FaceMask Cloud · AI-powered mask detection
+        </footer>
+    </main>
+</body>
+</html>
